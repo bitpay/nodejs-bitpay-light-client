@@ -8,6 +8,12 @@ export class Currency {
     static GUSD = "GUSD";
     static PAX = "PAX";
     static XRP = "XRP";
+    static BUSD = "BUSD";
+    static DOGE  = "DOGE";
+    static WBTC  = "WBTC";
+    static DAI  = "DAI";
+    static LTC  = "LTC";
+    static SHIB  = "SHIB";
 
     // FIAT
     static AED = "AED";

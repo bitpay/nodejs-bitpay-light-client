@@ -2,20 +2,20 @@ import {Env,} from "../src";
 import {Buyer} from "../src/Model/Invoice/Buyer";
 import {BillItem} from "../src/Model";
 
-const BitPaySDK = require('../src/index');
-const InvoiceStatus = BitPaySDK.InvoiceStatus;
-const Currencies = BitPaySDK.Currency;
+const BitPaySDKLight = require('../src/index');
+const InvoiceStatus = BitPaySDKLight.InvoiceStatus;
+const Currencies = BitPaySDKLight.Currency;
 
 let client;
 
-describe('BitPaySDK.Client', () => {
+describe('BitPaySDKLight.Client', () => {
     beforeAll(() => {
         jest.setTimeout(20000); // browser takes a while
         
         let env = Env.Test;
-        let token = 'D1puRMRi7iqwCLkxKmgxASQeEYg8MSDuRP3f2zAL6PdW';
+        let token = '3VnrJaXZnPSnVRpQehhti7ZCDMLc3tcehFjWW5Zcukbc';
 
-        client = new BitPaySDK.Client(env, token);
+        client = new BitPaySDKLight.Client(env, token);
     });
 
     describe('Rates', () => {
@@ -26,7 +26,7 @@ describe('BitPaySDK.Client', () => {
         });
 
         it('should update rates', async () => {
-            let Rates = new BitPaySDK.Models.Rates(await client.GetRates(), client);
+            let Rates = new BitPaySDKLight.Models.Rates(await client.GetRates(), client);
             await Rates.Update();
             let newRates = await Rates.GetRates();
 
@@ -52,7 +52,7 @@ describe('BitPaySDK.Client', () => {
         let buyer = new Buyer();
         buyer.email = "sandbox@bitpay.com";
         buyer.name = "BuyerTest";
-        let invoiceData = new BitPaySDK.Models.Invoice(6.02, Currencies.USD);
+        let invoiceData = new BitPaySDKLight.Models.Invoice(6.02, Currencies.USD);
         invoiceData.buyer = buyer;
         invoiceData.notificationURL = "https://hookb.in/1gw8aQxYQDHj002yk79K";
         invoiceData.extendedNotifications = true;
@@ -78,7 +78,6 @@ describe('BitPaySDK.Client', () => {
         let basicBillUsd;
         let basicBillEur;
         let retrievedBill;
-        let updatedBill;
         let deliveredBill;
 
         let items = [];
@@ -99,21 +98,21 @@ describe('BitPaySDK.Client', () => {
         items.push(item);
 
         it('should create bill USD', async () => {
-            let bill = new BitPaySDK.Models.Bill("0001", Currencies.USD, "sandbox@bitpay.com", items);
+            let bill = new BitPaySDKLight.Models.Bill("0001", Currencies.USD, "sandbox@bitpay.com", items);
             basicBillUsd = await client.CreateBill(bill);
 
             expect(basicBillUsd).toBeDefined();
         });
 
         it('should create bill EUR', async () => {
-            let bill = new BitPaySDK.Models.Bill("0002", Currencies.EUR, "sandbox@bitpay.com", items);
+            let bill = new BitPaySDKLight.Models.Bill("0002", Currencies.EUR, "sandbox@bitpay.com", items);
             basicBillEur = await client.CreateBill(bill);
 
             expect(basicBillEur).toBeDefined();
         });
 
         it('should get bill', async () => {
-            let bill = new BitPaySDK.Models.Bill("0003", Currencies.USD, "sandbox@bitpay.com", items);
+            let bill = new BitPaySDKLight.Models.Bill("0003", Currencies.USD, "sandbox@bitpay.com", items);
             basicBillUsd = await client.CreateBill(bill);
             retrievedBill = await client.GetBill(basicBillUsd.id);
 
@@ -121,7 +120,7 @@ describe('BitPaySDK.Client', () => {
         });
 
         it('should deliver bill', async () => {
-            let bill = new BitPaySDK.Models.Bill("0006", Currencies.USD, "sandbox@bitpay.com", items);
+            let bill = new BitPaySDKLight.Models.Bill("0006", Currencies.USD, "sandbox@bitpay.com", items);
             basicBillUsd = await client.CreateBill(bill);
             deliveredBill = await client.DeliverBill(basicBillUsd.id, basicBillUsd.token);
             
