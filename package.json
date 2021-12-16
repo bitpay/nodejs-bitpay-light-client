@@ -1,6 +1,6 @@
 {
-  "name": "bitpay-sdk",
-  "version": "1.0.0",
+  "name": "bitpay-sdk-light",
+  "version": "1.0.2201",
   "description": "Lite version of the NodeJS library for the new cryptographically secure BitPay API",
   "main": "index.ts",
   "scripts": {
